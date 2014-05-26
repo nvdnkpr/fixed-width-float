@@ -43,5 +43,7 @@ function sci (x, n, bytes) {
     }
     else s = format(y, bytes - p.length);
     if (s === undefined) return s;
-    return (s + p).slice(0, bytes);
+    var res = (s + p).slice(0, bytes);
+    var extra = Array(bytes - res.length + 1).join(' ');
+    return extra + res;
 }

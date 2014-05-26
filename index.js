@@ -18,9 +18,9 @@ function format (x, bytes) {
         return sprintf(rfmt, bytes >= 9 ? '-Infinity' : '-Inf').slice(0, bytes);
     }
     
-    var n;
-    if (x === 0) n = 0;
-    else n = Math.floor(Math.log(Math.abs(x)+0.1) / Math.log(10));
+    var n, fudge = Math.pow(10,1-Math.ceil((7-1)/2));
+    if (x === 0) n = 0
+    else n = Math.floor(Math.log(Math.abs(x) + fudge) / Math.log(10))
     
     if (n >= Math.ceil((bytes - 1) / 2)) return sci(x, n, bytes);
     if (n < -2) return sci(x, n, bytes);

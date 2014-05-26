@@ -40,6 +40,13 @@ function sci (x, n, bytes) {
         return s + p;
     }
     var s, y = x / Math.pow(10, n);
+    
+    var sx = Math.pow(10, -Math.ceil((bytes-1) / 2 - 1));
+    var slo = Math.pow(10,n) - sx;
+    var sup = Math.pow(10,n) - sx * 0.5
+    if (Math.abs(x) < sup && Math.abs(x) > sx) {
+        return (x < 0 ? '-' : ' ') + String(slo);
+    }
     if (Math.abs(y) + Math.pow(10, p.length - bytes + rounder) >= 10) {
         s = format(y / 10, bytes - p.length - Math.floor((bytes + 1) % 2));
         p = 'e' + String(n + 1);

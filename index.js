@@ -9,9 +9,14 @@ module.exports = function format (x, bytes) {
     if (x === -Infinity) return sprintf(rfmt, '-Inf');
     
     var n = Math.floor(Math.log(Math.abs(x)) / Math.log(10));
+    if (n < -2) {
+        var p = 'e' + String(n);
+        return format(x * Math.pow(10,-n), bytes - p.length) + p;
+    }
     if (n >= bytes) {
         var p = 'e' + String(n);
         return format(x / Math.pow(10,n), bytes - p.length) + p;
     }
-    return sprintf('%' + bytes + '.3f', x).slice(0, bytes);
+    var rbytes = Math.floor((bytes - 1) / 2);
+    return sprintf('%' + bytes + '.' + rbytes + 'f', x).slice(0, bytes);
 };

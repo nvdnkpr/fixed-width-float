@@ -41,10 +41,11 @@ function sci (x, n, bytes) {
     }
     var s, y = x / Math.pow(10, n);
     
-    var sx = Math.pow(10, -Math.ceil((bytes-1) / 2 - 1));
-    var slo = Math.pow(10,n) - sx;
-    var sup = Math.pow(10,n) - sx * 0.5
-    if (Math.abs(x) < sup && Math.abs(x) > sx) {
+    var b = Math.ceil(Math.log(Math.abs(x)) / Math.log(10));
+    var sx = Math.pow(10, -(bytes - b - 2));
+    var slo = Math.pow(10,b) - sx;
+    var sup = Math.pow(10,b) - sx * 0.5
+    if (Math.abs(x) < sup && Math.abs(x) > slo) {
         return (x < 0 ? '-' : ' ') + String(slo);
     }
     if (Math.abs(y) + Math.pow(10, p.length - bytes + rounder) >= 10) {

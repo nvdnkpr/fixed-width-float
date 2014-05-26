@@ -38,7 +38,7 @@ function sci (x, n, bytes) {
     }
     var s, y = x / Math.pow(10, n);
     if (y + Math.pow(10, p.length - bytes + rounder) >= 10) {
-        s = format(y / 10, bytes - p.length);
+        s = format(y / 10, bytes - p.length - Math.floor((bytes + 1) % 2));
         p = 'e' + String(n + 1);
     }
     else s = format(y, bytes - p.length);

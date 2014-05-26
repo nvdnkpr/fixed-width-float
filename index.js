@@ -26,7 +26,7 @@ function format (x, bytes) {
     if (n >= Math.ceil((bytes - 1) / 2)) return sci(x, n, bytes);
     if (n < -2) return sci(x, n, bytes);
     
-    if (x < 0) x = nround(x, bytes);
+    if (x < 0) x = nround(x, n, bytes);
     
     var rbytes = Math.floor((bytes - 1) / 2);
     return sprintf('%' + bytes + '.' + rbytes + 'f', x).slice(0, bytes);
@@ -51,7 +51,7 @@ function sci (x, n, bytes) {
     return extra + res;
 }
 
-function nround (x, bytes) {
-    var pb = Math.pow(10, Math.ceil((bytes - 1) / 2) - 1);
+function nround (x, n, bytes) {
+    var pb = Math.pow(10, Math.floor(bytes / 2) - Math.max(0, n-1));
     return -Math.round(Math.abs(x) * pb) / pb;
 }

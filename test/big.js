@@ -27,6 +27,7 @@ test('negative big', function (t) {
     t.equal(showf(-    999.901, 7), '-999.90');
     t.equal(showf(-    999.904, 7), '-999.90');
     t.equal(showf(-    999.905, 7), '-999.91');
+    t.equal(showf(-    999.906, 7), '-999.91');
     t.equal(showf(-    999.91, 7), '-999.91');
     t.equal(showf(-    999.94, 7), '-999.94');
     t.equal(showf(-    999.95, 7), '-999.95');

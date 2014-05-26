@@ -18,12 +18,15 @@ function format (x, bytes) {
         return sprintf(rfmt, bytes >= 9 ? '-Infinity' : '-Inf').slice(0, bytes);
     }
     
-    var n, fudge = Math.pow(10,1-Math.ceil((7-1)/2));
+    var n, b = Math.ceil((bytes + 1) / 2);
+    var fudge = Math.pow(10, 2-b);
     if (x === 0) n = 0
     else n = Math.floor(Math.log(Math.abs(x) + fudge) / Math.log(10))
     
     if (n >= Math.ceil((bytes - 1) / 2)) return sci(x, n, bytes);
     if (n < -2) return sci(x, n, bytes);
+    
+    if (x < 0) x = nround(x, bytes);
     
     var rbytes = Math.floor((bytes - 1) / 2);
     return sprintf('%' + bytes + '.' + rbytes + 'f', x).slice(0, bytes);
@@ -46,4 +49,9 @@ function sci (x, n, bytes) {
     var res = (s + p).slice(0, bytes);
     var extra = Array(bytes - res.length + 1).join(' ');
     return extra + res;
+}
+
+function nround (x, bytes) {
+    var pb = Math.pow(10, Math.ceil((bytes - 1) / 2) - 1);
+    return -Math.round(Math.abs(x) * pb) / pb;
 }

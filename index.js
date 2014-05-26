@@ -36,6 +36,7 @@ function packf (x, bytes) {
     var lbytes = Math.floor(bytes / 2 - 1);
     var rbytes = bytes - lbytes - 2;
     
+    if (rbytes < 0) return undefined;
     var s = Math.abs(x).toFixed(rbytes);
     var dec = s.split('.')[0];
     if (lbytes < dec.length - 1) {

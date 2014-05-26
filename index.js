@@ -8,7 +8,10 @@ module.exports = function format (x, bytes) {
     if (x === Infinity) return sprintf(rfmt, 'Inf');
     if (x === -Infinity) return sprintf(rfmt, '-Inf');
     
-    var n = Math.floor(Math.log(Math.abs(x)) / Math.log(10));
+    var n;
+    if (x === 0) n = 0;
+    else n = Math.floor(Math.log(Math.abs(x)) / Math.log(10));
+    
     if (n < -2) {
         var p = 'e' + String(n);
         return format(x * Math.pow(10,-n), bytes - p.length) + p;

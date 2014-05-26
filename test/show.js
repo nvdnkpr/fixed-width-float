@@ -15,8 +15,8 @@ test('one zero negative one', function (t) {
     t.equal(showf(1, 2), ' 1');
     t.equal(showf(-1, 2), '-1');
     
-    t.equal(showf(100, 2), 'OV');
-    t.equal(showf(-100, 2), 'OV');
+    t.equal(showf(100, 2), undefined);
+    t.equal(showf(-100, 2), undefined);
     
     t.end();
 });

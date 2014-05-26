@@ -21,12 +21,15 @@ module.exports = function format (x, bytes) {
     
     if (n < -2) {
         var p = 'e' + String(n);
-        return format(x * Math.pow(10,-n), bytes - p.length) + p;
+        var r = format(x * Math.pow(10,-n), bytes - p.length);
+        if (r === undefined) return r;
+        return r + p;
     }
     if (n >= bytes) {
         var p = 'e' + String(n);
-        var s = format(x / Math.pow(10,n), bytes - p.length) + p;
-        return s.slice(0, bytes);
+        var r = format(x / Math.pow(10,n), bytes - p.length);
+        if (r === undefined) return r;
+        return (r + p).slice(0, bytes);
     }
     var rbytes = Math.floor((bytes - 1) / 2);
     return sprintf('%' + bytes + '.' + rbytes + 'f', x).slice(0, bytes);

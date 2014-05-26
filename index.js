@@ -1,12 +1,13 @@
 var sprintf = require('sprintf');
 
 module.exports = function format (x, bytes) {
-    if (!bytes) bytes = 7;
+    if (bytes === undefined) bytes = 7;
     var rfmt = '%' + bytes + '.' + bytes + 's';
     
     if (isNaN(x)) return sprintf(rfmt, 'NaN');
     if (x === Infinity) return sprintf(rfmt, 'Inf');
     if (x === -Infinity) return sprintf(rfmt, '-Inf');
+    if (bytes === 0) return 'OVERFLOW';
     
     var n;
     if (x === 0) n = 0;
@@ -18,7 +19,8 @@ module.exports = function format (x, bytes) {
     }
     if (n >= bytes) {
         var p = 'e' + String(n);
-        return format(x / Math.pow(10,n), bytes - p.length) + p;
+        var s = format(x / Math.pow(10,n), bytes - p.length) + p;
+        return s.slice(0, bytes);
     }
     var rbytes = Math.floor((bytes - 1) / 2);
     return sprintf('%' + bytes + '.' + rbytes + 'f', x).slice(0, bytes);

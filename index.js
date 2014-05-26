@@ -4,10 +4,16 @@ module.exports = function format (x, bytes) {
     if (bytes === undefined) bytes = 7;
     var rfmt = '%' + bytes + '.' + bytes + 's';
     
+    if (bytes <= 0) return undefined;
     if (isNaN(x)) return sprintf(rfmt, 'NaN');
-    if (x === Infinity) return sprintf(rfmt, 'Inf');
-    if (x === -Infinity) return sprintf(rfmt, '-Inf');
-    if (bytes === 0) return 'OVERFLOW';
+    if (x === Infinity) {
+        if (bytes === 1) return undefined;
+        return sprintf(rfmt, bytes >= 9 ? 'Infinity' : ' Inf').slice(0, bytes);
+    }
+    if (x === -Infinity) {
+        if (bytes === 1) return undefined;
+        return sprintf(rfmt, bytes >= 9 ? '-Infinity' : '-Inf').slice(0, bytes);
+    }
     
     var n;
     if (x === 0) n = 0;

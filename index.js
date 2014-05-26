@@ -1,6 +1,8 @@
 var sprintf = require('sprintf');
 
-module.exports = function format (x, bytes) {
+module.exports = format;
+
+function format (x, bytes) {
     if (bytes === undefined) bytes = 7;
     var rfmt = '%' + bytes + '.' + bytes + 's';
     
@@ -17,20 +19,20 @@ module.exports = function format (x, bytes) {
     
     var n;
     if (x === 0) n = 0;
-    else n = Math.floor(Math.log(Math.abs(x)) / Math.log(10));
+    else n = Math.floor(Math.log(Math.abs(x+0.1)) / Math.log(10));
     
-    if (n < -2) {
-        var p = 'e' + String(n);
-        var r = format(x * Math.pow(10,-n), bytes - p.length);
-        if (r === undefined) return r;
-        return r + p;
-    }
-    if (n >= bytes) {
-        var p = 'e' + String(n);
-        var r = format(x / Math.pow(10,n), bytes - p.length);
-        if (r === undefined) return r;
-        return (r + p).slice(0, bytes);
-    }
+    if (n >= Math.ceil((bytes - 1) / 2)) return sci(x, n, bytes);
+    if (n < -2) return sci(x, n, bytes);
+    
     var rbytes = Math.floor((bytes - 1) / 2);
     return sprintf('%' + bytes + '.' + rbytes + 'f', x).slice(0, bytes);
 };
+
+function sci (x, n, bytes) {
+    var p = 'e' + String(n);
+    if (n < 0) return format(x * Math.pow(10,-n), bytes - p.length) + p;
+    
+    var s = format(x / Math.pow(10,n), bytes - p.length) + p;
+    if (s === undefined) return s;
+    return s.slice(0, bytes);
+}

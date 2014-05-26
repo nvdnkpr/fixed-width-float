@@ -1,7 +1,7 @@
 var showf = require('../');
 var test = require('tape');
 
-test('one zero negative one', function (t) {
+test('Infinity', function (t) {
     t.equal(showf( Infinity, 0), undefined);
     t.equal(showf(-Infinity, 0), undefined);
     t.equal(showf( Infinity, 1), undefined);

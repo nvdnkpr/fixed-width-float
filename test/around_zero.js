@@ -1,7 +1,7 @@
 var showf = require('../');
 var test = require('tape');
 
-test('one zero negative one', function (t) {
+test('around zero', function (t) {
     t.equal(showf(1, 7), '  1.000');
     t.equal(showf(0, 7), '  0.000');
     t.equal(showf(-1, 7), ' -1.000');

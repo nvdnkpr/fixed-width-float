@@ -14,7 +14,6 @@ test('big', function (t) {
     t.equal(showf(1.23456e9, 7), ' 1.23e9');
     t.equal(showf(1.23456e20, 7), ' 1.2e20');
     t.equal(showf(1.26456e20, 7), ' 1.3e20');
-    t.equal(showf(9.99999e20, 7), ' 1.0e21');
     
     t.end();
 });

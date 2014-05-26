@@ -1,4 +1,5 @@
 var sprintf = require('sprintf');
+var rounder = Math.log(500) / Math.log(10);
 
 module.exports = format;
 
@@ -36,7 +37,7 @@ function sci (x, n, bytes) {
         return s + p;
     }
     var s, y = x / Math.pow(10, n);
-    if (y + Math.pow(10, p.length - bytes) >= 10) {
+    if (y + Math.pow(10, p.length - bytes + rounder) >= 10) {
         s = format(y / 10, bytes - p.length);
         p = 'e' + String(n + 1);
     }

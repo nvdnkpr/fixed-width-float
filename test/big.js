@@ -13,6 +13,15 @@ test('big', function (t) {
     t.equal(showf(10000000, 7), ' 1.00e7');
     
     t.equal(showf(1.23456e9, 7), ' 1.23e9');
+    t.equal(showf(2.23456e9, 7), ' 2.23e9');
+    t.equal(showf(3.23456e9, 7), ' 3.23e9');
+    t.equal(showf(4.23456e9, 7), ' 4.23e9');
+    t.equal(showf(5.23456e9, 7), ' 5.23e9');
+    t.equal(showf(6.23456e9, 7), ' 6.23e9');
+    t.equal(showf(7.23456e9, 7), ' 7.23e9');
+    t.equal(showf(8.23456e9, 7), ' 8.23e9');
+    t.equal(showf(9.23456e9, 7), ' 9.23e9');
+    t.equal(showf(10.23456e9, 7), ' 1.2e10');
     t.equal(showf(1.23456e20, 7), ' 1.2e20');
     t.equal(showf(1.26456e20, 7), ' 1.3e20');
     

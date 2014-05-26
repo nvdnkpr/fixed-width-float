@@ -35,7 +35,12 @@ function sci (x, n, bytes) {
         if (s === undefined) return s;
         return s + p;
     }
-    var s = format(x / Math.pow(10,n), bytes - p.length);
+    var s, y = x / Math.pow(10, n);
+    if (y + Math.pow(10, p.length - bytes) >= 10) {
+        s = format(y / 10, bytes - p.length);
+        p = 'e' + String(n + 1);
+    }
+    else s = format(y, bytes - p.length);
     if (s === undefined) return s;
     return (s + p).slice(0, bytes);
 }

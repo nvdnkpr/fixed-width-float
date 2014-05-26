@@ -20,7 +20,7 @@ function format (x, bytes) {
     
     var n;
     if (x === 0) n = 0;
-    else n = Math.floor(Math.log(Math.abs(x+0.1)) / Math.log(10));
+    else n = Math.floor(Math.log(Math.abs(x)+0.1) / Math.log(10));
     
     if (n >= Math.ceil((bytes - 1) / 2)) return sci(x, n, bytes);
     if (n < -2) return sci(x, n, bytes);

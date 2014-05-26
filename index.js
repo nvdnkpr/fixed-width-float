@@ -30,9 +30,12 @@ function format (x, bytes) {
 
 function sci (x, n, bytes) {
     var p = 'e' + String(n);
-    if (n < 0) return format(x * Math.pow(10,-n), bytes - p.length) + p;
-    
-    var s = format(x / Math.pow(10,n), bytes - p.length) + p;
+    if (n < 0) {
+        var s = format(x * Math.pow(10,-n), bytes - p.length);
+        if (s === undefined) return s;
+        return s + p;
+    }
+    var s = format(x / Math.pow(10,n), bytes - p.length);
     if (s === undefined) return s;
-    return s.slice(0, bytes);
+    return (s + p).slice(0, bytes);
 }

@@ -19,9 +19,8 @@ function format (x, bytes) {
     }
     
     var n, b = Math.ceil((bytes + 1) / 2);
-    var fudge = Math.pow(10, 2-b);
     if (x === 0) n = 0
-    else n = Math.floor(Math.log(Math.abs(x) + fudge) / Math.log(10))
+    else n = Math.floor(Math.log(Math.abs(x)) / Math.log(10))
     
     if (n >= Math.ceil((bytes - 1) / 2)) return sci(x, n, bytes);
     if (n < -2) return sci(x, n, bytes);
@@ -29,7 +28,11 @@ function format (x, bytes) {
     if (x < 0) x = nround(x, n, bytes);
     
     var rbytes = Math.floor((bytes - 1) / 2);
-    return sprintf('%' + bytes + '.' + rbytes + 'f', x).slice(0, bytes);
+    var res = sprintf('%' + bytes + '.' + rbytes + 'f', x)
+    var dot = res.split('.')[1];
+    var ex = Math.floor((bytes - 1) / 2)
+    if (!/^[ -]/.test(res) && dot && dot.length + 1 !== ex) res = ' ' + res;
+    return res.slice(0, bytes);
 };
 
 function sci (x, n, bytes) {

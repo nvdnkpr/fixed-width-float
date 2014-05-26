@@ -4,7 +4,7 @@ var test = require('tape');
 test('small', function (t) {
     t.equal(showf(   1/10, 7), '  0.100');
     t.equal(showf(  1/100, 7), '  0.010');
-    t.equal(showf( 1/1000, 7), '  0.001');
+    t.equal(showf( 1/1000, 7), ' 1.0e-3');
     t.equal(showf(1/10000, 7), ' 1.0e-4');
     t.equal(showf(1e-5, 7), ' 1.0e-5');
     t.equal(showf(1e-6, 7), ' 1.0e-6');

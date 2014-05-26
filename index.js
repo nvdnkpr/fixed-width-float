@@ -9,15 +9,9 @@ module.exports = function format (x, bytes) {
     if (x === -Infinity) return sprintf(rfmt, '-Inf');
     
     var n = Math.floor(Math.log(Math.abs(x)) / Math.log(10));
-    var pivot = Math.min(3, bytes - 2 - n);
-    
-    if (pivot === -1) {
-        return String(Math.round(x)).slice(0,bytes-1);
-    }
-    
-    else if (pivot < 0) {
+    if (n >= bytes) {
         var p = 'e' + String(n);
         return format(x / Math.pow(10,n), bytes - p.length) + p;
     }
-    return sprintf('%' + bytes + '.' + pivot + 'f', x);
+    return sprintf('%' + bytes + '.3f', x).slice(0, bytes);
 };

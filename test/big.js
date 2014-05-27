@@ -5,8 +5,8 @@ test('big', function (t) {
     t.equal(showf(       1, 8), '   1.000');
     t.equal(showf(      10, 8), '  10.000');
     t.equal(showf(     100, 8), ' 100.000');
-    t.equal(showf(    1000, 8), ' 1.00e+3');
-    t.equal(showf(   10000, 8), ' 1.00e+4');
+    t.equal(showf(    1000, 8), ' 1000.00');
+    t.equal(showf(   10000, 8), ' 10000.0');
     t.equal(showf(  100000, 8), ' 1.00e+5');
     t.equal(showf( 1000000, 8), ' 1.00e+6');
     t.equal(showf(10000000, 8), ' 1.00e+7');
@@ -36,7 +36,8 @@ test('negative big', function (t) {
     t.equal(showf(-    999.9, 8), '-999.900');
     t.equal(showf(-    999.9901, 8), '-999.990');
     t.equal(showf(-    999.9904, 8), '-999.990');
-    t.equal(showf(-    999.9905, 8), '-999.991');
+    t.equal(showf(-    999.9905, 8), '-999.990');
+    t.equal(showf(-    999.99051, 8), '-999.991');
     t.equal(showf(-    999.9906, 8), '-999.991');
     t.equal(showf(-    999.91, 7), '-999.91');
     t.equal(showf(-    999.94, 7), '-999.94');

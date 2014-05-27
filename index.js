@@ -62,8 +62,9 @@ function packf (x, bytes) {
     var tn = Math.pow(10, log10f(Math.abs(x)));
     x = Math.round(x / tn * b) / b * tn;
     
-    var s = sprintf('%' + lbytes + '.' + rbytes + 'f', x).slice(0, bytes);
+    var s = sprintf('%' + lbytes + '.' + rbytes + 'f', x);
     if (x > 0) s = ' ' + s;
+    s = s.slice(0, bytes);
     var r = s.split('.')[1];
     if (!r || r.length < 1) return sci(x, bytes);
     return pad(s, bytes).slice(0, bytes);

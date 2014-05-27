@@ -1,6 +1,4 @@
 var sprintf = require('sprintf');
-var rounder = Math.log(500) / Math.log(10);
-
 module.exports = format;
 
 function format (x, bytes) {
@@ -26,6 +24,9 @@ function sci (x, bytes) {
     if (x === 0) return pad('0.' + Array(bytes - 3).join('0'), bytes);
     
     if (bytes - sz - 6 < 0) return undefined;
+    var b = Math.pow(10,bytes+1);
+    x = Math.round(x * b) / b;
+    
     var s = sprintf('%.' + (bytes - sz - 6) + 'e', x);
     if (x > 0) s = ' ' + s;
     return pad(s, bytes);

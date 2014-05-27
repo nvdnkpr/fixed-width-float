@@ -12,7 +12,7 @@ test('small', function (t) {
     t.equal(showf(5.5e-7, 7), ' 5.5e-7');
     t.equal(showf(5.55e-7, 7), ' 5.6e-7');
     t.equal(showf(9.9e-7, 7), ' 9.9e-7');
-    t.equal(showf(9.95e-7, 7), ' 1.0e-8');
+    t.equal(showf(9.95e-7, 7), ' 1.0e-6');
     
     t.end();
 });

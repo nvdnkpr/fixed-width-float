@@ -21,7 +21,6 @@ function format (x, bytes) {
 function sci (x, bytes) {
     var n = Math.max(1, log10f(Math.abs(x)));
     var sz = log10f(Math.abs(n));
-    if (x === 0) return pad('0.' + Array(bytes - 3).join('0'), bytes);
     
     if (bytes - sz - 6 < 0) return undefined;
     var b = Math.pow(10,bytes+1);
@@ -43,12 +42,25 @@ function log10f (n) {
 function packf (x, bytes) {
     var lbytes = Math.max(1, Math.floor((bytes - 2) / 2));
     var rbytes = bytes - lbytes - 2;
+    
+    if (x === 0 && bytes < 4) {
+        return pad('0', bytes);
+    }
+    else if (x === 0) {
+        return pad('0.' + Array(rbytes+1).join('0'), bytes);
+    }
+    
     if (rbytes <= 0) {
         var s = sprintf('%' + lbytes + 'f', x);
         if (x >= 0) s = ' ' + s;
         if (s.length > bytes) return undefined;
         return pad(s, bytes);
     }
+    
+    var b = Math.pow(10,bytes-1);
+    var tn = Math.pow(10, log10f(Math.abs(x)));
+    x = Math.round(x / tn * b) / b * tn;
+    
     var s = sprintf('%' + lbytes + '.' + rbytes + 'f', x);
     if (x > 0) s = ' ' + s;
     if (s.split('.')[0].length - 1 > lbytes) return sci(x, bytes);

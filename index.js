@@ -23,7 +23,13 @@ function sci (x, bytes) {
     var sz = log10f(Math.abs(n));
     
     var b = Math.pow(10,bytes+1);
-    x = Math.round(x * b) / b;
+    if (Math.abs(x) < 1) {
+        x = Math.round(x * b) / b;
+    }
+    else {
+        var tn = Math.pow(10, n + 1);
+        x = Math.round(x / tn * b) / b * tn;
+    }
     
     var s;
     if (bytes - sz - 6 === -1) {
@@ -68,12 +74,12 @@ function packf (x, bytes) {
     
     var b = Math.pow(10,bytes-3);
     var tn = Math.pow(10, log10f(Math.abs(x)));
-    x = Math.round(x / tn * b) / b * tn;
+    var xr = Math.round(x / tn * b) / b * tn;
     
-    var s = sprintf('%' + lbytes + '.' + rbytes + 'f', x);
-    if (x > 0) s = ' ' + s;
+    var s = sprintf('%' + lbytes + '.' + rbytes + 'f', xr);
+    if (xr > 0) s = ' ' + s;
     s = s.slice(0, bytes);
     var r = s.split('.')[1];
-    if (!r || r.length < 1) return sci(x, bytes);
+    if (!r || r.length < 1) return sci(xr, bytes);
     return pad(s, bytes).slice(0, bytes);
 }

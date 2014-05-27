@@ -17,62 +17,25 @@ function format (x, bytes) {
         if (bytes === 1) return undefined;
         return sprintf(rfmt, bytes >= 9 ? '-Infinity' : '-Inf').slice(0, bytes);
     }
-    var s = packf(x, bytes);
-    if (s === undefined) return s;
-    return s.slice(0, bytes);
+    return packf(x, bytes);
 };
 
 function sci (x, bytes) {
-    var n = Math.floor(Math.log(Math.abs(x)) / Math.log(10));
-    var p = 'e' + String(n);
-    
-    var y = Math.abs(x);
-    var r = y / Math.pow(10, n);
-    if (r >= 10 - Math.pow(10, -bytes)) {
-        r /= 10;
-        p = 'e' + String(n + 1);
-    }
-    
-    var s;
-    if (x < 0) {
-        var res = packf(r, bytes - p.length);
-        if (res === undefined) return res;
-        s = '-' + res.substr(1);
-    }
-    else {
-        s = packf(r, bytes - p.length);
-    }
-    if (s === undefined) return s;
-    return s + p;
+    var n = log10f(Math.abs(x));
+    var s = sprintf('%.' + (bytes - log10f(n) - 6) + 'e', x);
+    if (x > 0) s = ' ' + s;
+    return s;
+}
+
+function log10f (n) {
+    return Math.floor(Math.log(n) / Math.log(10));
 }
 
 function packf (x, bytes) {
-    var lbytes = Math.floor(bytes / 2 - 1);
+    var lbytes = Math.max(1, Math.floor((bytes - 2) / 2));
     var rbytes = bytes - lbytes - 2;
-    
-    if (x === 0) {
-        return ' ' + Array(lbytes).join(' ')
-            + '0.' + Array(rbytes+1).join('0')
-        ;
-    }
-    
-    var y = Math.abs(x);
-    var n = Math.floor(Math.log(y) / Math.log(10));
-    if (n !== 0) {
-        var b = Math.pow(10, bytes - 1);
-        var tn = Math.pow(10, n + 2);
-        x = Math.round(x / tn * b) * tn / b;
-        y = Math.abs(x);
-    }
-    
-    if (rbytes < 0) return undefined;
-    if (y * Math.pow(10, rbytes) < 1) return sci(x, bytes);
-    
-    var s = y.toFixed(rbytes);
-    var dec = s.split('.')[0];
-    if (lbytes < dec.length - 1) {
-        return sci(x, bytes);
-    }
-    var sp = Array(lbytes - dec.length + 1).join(' ');
-    return sp + (x < 0 ? '-' : ' ') + s;
+    var s = sprintf('%' + lbytes + '.' + rbytes + 'f', x);
+    if (x > 0) s = ' ' + s;
+    if (s.split('.')[0].length - 1 > lbytes) return sci(x, bytes);
+    return Array(Math.max(0, bytes - s.length + 1)).join(' ') + s;
 }

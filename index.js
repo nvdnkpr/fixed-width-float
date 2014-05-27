@@ -23,8 +23,14 @@ function format (x, bytes) {
 function sci (x, bytes) {
     var n = log10f(Math.abs(x));
     var sz = log10f(Math.abs(n));
+    if (x === 0) return pad('0.' + Array(bytes - 3).join('0'), bytes);
+    
     var s = sprintf('%.' + (bytes - sz - 6) + 'e', x);
     if (x > 0) s = ' ' + s;
+    return pad(s, bytes);
+}
+
+function pad (s, bytes) {
     return Array(Math.max(0, bytes - s.length + 1)).join(' ') + s;
 }
 
@@ -39,5 +45,5 @@ function packf (x, bytes) {
     if (x > 0) s = ' ' + s;
     if (s.split('.')[0].length - 1 > lbytes) return sci(x, bytes);
     if (Math.abs(x) < Math.pow(10,1-rbytes)) return sci(x, bytes);
-    return Array(Math.max(0, bytes - s.length + 1)).join(' ') + s;
+    return pad(s, bytes);
 }

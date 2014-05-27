@@ -50,12 +50,20 @@ function packf (x, bytes) {
     var lbytes = Math.floor(bytes / 2 - 1);
     var rbytes = bytes - lbytes - 2;
     
+    if (x === 0) {
+        return ' ' + Array(lbytes).join(' ')
+            + '0.' + Array(rbytes+1).join('0')
+        ;
+    }
+    
     var y = Math.abs(x);
     var n = Math.floor(Math.log(y) / Math.log(10));
-    var b = Math.pow(10, bytes - 1);
-    var tn = Math.pow(10, n + 2);
-    x = Math.round(x / tn * b) * tn / b;
-    y = Math.abs(x);
+    if (n !== 0) {
+        var b = Math.pow(10, bytes - 1);
+        var tn = Math.pow(10, n + 2);
+        x = Math.round(x / tn * b) * tn / b;
+        y = Math.abs(x);
+    }
     
     if (rbytes < 0) return undefined;
     if (y * Math.pow(10, rbytes) < 1) return sci(x, bytes);

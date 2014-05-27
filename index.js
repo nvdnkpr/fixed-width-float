@@ -42,7 +42,12 @@ function log10f (n) {
 function packf (x, bytes) {
     var lbytes = Math.max(1, Math.floor((bytes - 2) / 2));
     var rbytes = bytes - lbytes - 2;
-    if (rbytes < 0) return undefined;
+    if (rbytes <= 0) {
+        var s = sprintf('%' + lbytes + 'f', x);
+        if (x >= 0) s = ' ' + s;
+        if (s.length > bytes) return undefined;
+        return pad(s, bytes);
+    }
     var s = sprintf('%' + lbytes + '.' + rbytes + 'f', x);
     if (x > 0) s = ' ' + s;
     if (s.split('.')[0].length - 1 > lbytes) return sci(x, bytes);

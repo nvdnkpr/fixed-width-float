@@ -2,7 +2,7 @@ var sprintf = require('sprintf');
 module.exports = format;
 
 function format (x, bytes) {
-    if (bytes === undefined) bytes = 7;
+    if (bytes === undefined) bytes = 8;
     var rfmt = '%' + bytes + '.' + bytes + 's';
     
     if (bytes <= 0) return undefined;

@@ -56,15 +56,15 @@ function packf (x, bytes) {
         if (s.length > bytes) return undefined;
         return pad(s, bytes);
     }
+    if (Math.abs(x) < Math.pow(10,1-rbytes)) return sci(x, bytes);
     
     var b = Math.pow(10,bytes-3);
     var tn = Math.pow(10, log10f(Math.abs(x)));
     x = Math.round(x / tn * b) / b * tn;
     
-    var s = sprintf('%' + lbytes + '.' + rbytes + 'f', x);
+    var s = sprintf('%' + lbytes + '.' + rbytes + 'f', x).slice(0, bytes);
     if (x > 0) s = ' ' + s;
-    var dl = s.split('.')[0].length - 1;
-    if (dl - 2 > lbytes) return sci(x, bytes);
-    if (Math.abs(x) < Math.pow(10,1-rbytes)) return sci(x, bytes);
+    var r = s.split('.')[1];
+    if (!r || r.length < 1) return sci(x, bytes);
     return pad(s, bytes).slice(0, bytes);
 }

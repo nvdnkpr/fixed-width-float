@@ -43,7 +43,7 @@ test('negative big', function (t) {
     t.equal(showf(-    9999.94, 8), '-9999.94');
     t.equal(showf(-    9999.99, 8), '-9999.99');
     t.equal(showf(-    9999.994, 8), '-9999.99');
-    t.equal(showf(-    9999.995, 8), '-10000.0');
+    t.equal(showf(-    9999.9951, 8), '-10000.0');
     t.equal(showf(-    99999.94, 8), '-99999.9');
     t.equal(showf(-    999999.94, 9), '-999999.9');
     t.equal(showf(     999999.94, 9), ' 999999.9');
@@ -53,19 +53,20 @@ test('negative big', function (t) {
     t.equal(showf(     999.994, 7), ' 999.99');
     t.equal(showf(-    499.994, 7), '-499.99');
     t.equal(showf(-    9999.94, 7), '-9999.9');
-    t.equal(showf(-    9989.94, 7), '-9.99e3');
-    t.equal(showf(-    999.995, 7), '-1000.0');
+    t.equal(showf(-    9989.94, 7), '-9989.9');
+    t.equal(showf(-    999.995, 7), '-999.99');
+    t.equal(showf(-    999.9951, 7), '-1000.0');
     t.equal(showf(-    1000, 7), '-1000.0');
-    t.equal(showf(-    1000.4, 7), '-1.00e3');
-    t.equal(showf(-    1000.9, 7), '-1.00e3');
-    t.equal(showf(-   10000, 7), '-1.00e4');
-    t.equal(showf(-  100000, 7), '-1.00e5');
-    t.equal(showf(- 1000000, 7), '-1.00e6');
-    t.equal(showf(-10000000, 7), '-1.00e7');
+    t.equal(showf(-    1000.4, 7), '-1000.4');
+    t.equal(showf(-    1000.9, 7), '-1000.9');
+    t.equal(showf(-   10000, 8), '-10000.0');
+    t.equal(showf(-  100000, 8), '-1.00e+5');
+    t.equal(showf(- 1000000, 8), '-1.00e+6');
+    t.equal(showf(-10000000, 8), '-1.00e+7');
     
-    t.equal(showf(-1.23456e9, 7), '-1.23e9');
-    t.equal(showf(-1.23456e20, 7), '-1.2e20');
-    t.equal(showf(-1.26456e20, 7), '-1.3e20');
+    t.equal(showf(-1.23456e9, 8), '-1.23e+9');
+    t.equal(showf(-1.23456e20, 8), '-1.2e+20');
+    t.equal(showf(-1.26456e20, 8), '-1.3e+20');
     
     t.end();
 });

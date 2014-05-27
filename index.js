@@ -25,9 +25,10 @@ function format (x, bytes) {
 function sci (x, bytes) {
     var n = Math.floor(Math.log(Math.abs(x)) / Math.log(10));
     var p = 'e' + String(n);
+    
     var y = Math.abs(x);
     var r = y / Math.pow(10, n);
-    if (Math.abs(r) >= 10 - Math.pow(10, -bytes)) {
+    if (r >= 10 - Math.pow(10, -bytes)) {
         r /= 10;
         p = 'e' + String(n + 1);
     }
@@ -49,10 +50,17 @@ function packf (x, bytes) {
     var lbytes = Math.floor(bytes / 2 - 1);
     var rbytes = bytes - lbytes - 2;
     
-    if (rbytes < 0) return undefined;
-    if (Math.abs(x) * Math.pow(10, rbytes) < 1) return sci(x, bytes);
+    var y = Math.abs(x);
+    var n = Math.floor(Math.log(y) / Math.log(10));
+    var b = Math.pow(10, bytes - 1);
+    var tn = Math.pow(10, n + 2);
+    x = Math.round(x / tn * b) * tn / b;
+    y = Math.abs(x);
     
-    var s = Math.abs(x).toFixed(rbytes);
+    if (rbytes < 0) return undefined;
+    if (y * Math.pow(10, rbytes) < 1) return sci(x, bytes);
+    
+    var s = y.toFixed(rbytes);
     var dec = s.split('.')[0];
     if (lbytes < dec.length - 1) {
         return sci(x, bytes);

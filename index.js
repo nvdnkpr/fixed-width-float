@@ -22,11 +22,19 @@ function sci (x, bytes) {
     var n = Math.max(1, log10f(Math.abs(x)));
     var sz = log10f(Math.abs(n));
     
-    if (bytes - sz - 6 < 0) return undefined;
     var b = Math.pow(10,bytes+1);
     x = Math.round(x * b) / b;
     
-    var s = sprintf('%.' + (bytes - sz - 6) + 'e', x);
+    var s;
+    if (bytes - sz - 6 === -1) {
+        x = Math.round(x / Math.pow(10, n));
+        x = x * Math.pow(10, n);
+        s = sprintf('%1e', x).replace(/\.[^e]+/, '');
+    }
+    else if (bytes - sz - 6 < 0) return undefined;
+    else {
+        s = sprintf('%.' + (bytes - sz - 6) + 'e', x);
+    }
     if (x > 0) s = ' ' + s;
     return pad(s, bytes);
 }

@@ -2,6 +2,10 @@
 
 display a float in a fixed-width string
 
+[![testling badge](https://ci.testling.com/substack/fixed-width-float.png)](https://ci.testling.com/substack/fixed-width-float)
+
+[![build status](https://secure.travis-ci.org/substack/fixed-width-float.png)](http://travis-ci.org/substack/fixed-width-float)
+
 # example
 
 ``` js

@@ -26,8 +26,19 @@ function sci (x, bytes) {
     var n = Math.floor(Math.log(Math.abs(x)) / Math.log(10));
     var p = 'e' + String(n);
     var y = Math.abs(x);
+    var r = y / Math.pow(10, n);
+    if (Math.abs(r) >= 10 - Math.pow(10, y < 1 ? n : -n)) {
+        r /= 10;
+        p = 'e' + String(n + 1);
+    }
     
-    var s = packf(x / Math.pow(10, n), bytes - p.length);
+    var s;
+    if (x < 0) {
+        s = '-' + packf(r, bytes - p.length).substr(1);
+    }
+    else {
+        s = packf(r, bytes - p.length);
+    }
     if (s === undefined) return s;
     return s + p;
 }
@@ -37,6 +48,8 @@ function packf (x, bytes) {
     var rbytes = bytes - lbytes - 2;
     
     if (rbytes < 0) return undefined;
+    if (Math.abs(x) * Math.pow(10, rbytes) < 1) return sci(x, bytes);
+    
     var s = Math.abs(x).toFixed(rbytes);
     var dec = s.split('.')[0];
     if (lbytes < dec.length - 1) {
